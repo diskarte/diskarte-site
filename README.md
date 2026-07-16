@@ -42,7 +42,8 @@ GitHub Pages must be set to "GitHub Actions" source once
     git add -A && git commit -m "site: v2" && git push origin main
 
 The workflow in .github/workflows/deploy.yml builds and publishes.
-public/CNAME keeps the diskarte.jp custom domain.
+The `diskarte.jp` custom domain is configured in Settings → Pages.
+`public/CNAME` is copied into the published `dist/` artifact by Astro.
 
 ## Forms & analytics
 
