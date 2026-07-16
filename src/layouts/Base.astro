@@ -1,0 +1,84 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { ui, altPath, type Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  ogType?: string;
+  jsonLd?: object[];
+  noindex?: boolean;
+}
+const { locale, title, description, ogType = 'website', jsonLd = [], noindex = false } = Astro.props;
+const t = ui[locale];
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const site = 'https://diskarte.jp';
+const canonical = `${site}${path === '/' ? '' : path}`;
+const enUrl = `${site}${altPath(path, 'en') === '/' ? '' : altPath(path, 'en')}`;
+const jaUrl = `${site}${altPath(path, 'ja')}`;
+const ogImage = `${site}/assets/og-card-${locale}.png`;
+---
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {!noindex && <link rel="alternate" hreflang="en" href={enUrl} />}
+    {!noindex && <link rel="alternate" hreflang="ja" href={jaUrl} />}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={enUrl} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="Diskarte Notes" href="/rss.xml" />
+    <meta name="theme-color" content="#13171d" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:site_name" content="Diskarte" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={locale === 'ja' ? 'ja_JP' : 'en_US'} />
+    <meta property="og:locale:alternate" content={locale === 'ja' ? 'en_US' : 'ja_JP'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    {jsonLd.map((obj) => (
+      <script type="application/ld+json" set:html={JSON.stringify(obj)} />
+    ))}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t.skip}</a>
+    <Header locale={locale} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer locale={locale} />
+    <script>
+      // Remember explicit language choice (set by the locale switcher).
+      // No automatic redirects — choice is persistent, never forced.
+      const stored = localStorage.getItem('diskarte-locale');
+      const here = document.documentElement.lang;
+      if (!stored) localStorage.setItem('diskarte-locale', here);
+      // Reveal-on-scroll, honoring reduced motion.
+      const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const els = document.querySelectorAll('.reveal');
+      if (prefersReduced || !('IntersectionObserver' in window)) {
+        els.forEach((e) => e.classList.add('in'));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => entries.forEach((en) => en.isIntersecting && (en.target.classList.add('in'), io.unobserve(en.target))),
+          { rootMargin: '0px 0px -8% 0px' }
+        );
+        els.forEach((e) => io.observe(e));
+      }
+    </script>
+  </body>
+</html>

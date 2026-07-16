@@ -1,0 +1,58 @@
+---
+import Base from '../../layouts/Base.astro';
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { routes, type Locale } from '../../i18n/ui';
+interface Props { locale: Locale; entry: CollectionEntry<'notes'> }
+const { locale, entry } = Astro.props;
+const { Content } = await render(entry);
+const fmt = new Intl.DateTimeFormat(locale === 'ja' ? 'ja-JP' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: entry.data.title,
+    description: entry.data.summary,
+    datePublished: entry.data.date.toISOString(),
+    inLanguage: locale,
+    author: { '@type': 'Person', name: 'Margaux Flores' },
+    publisher: { '@type': 'Organization', name: 'Diskarte', url: 'https://diskarte.jp' },
+  },
+];
+---
+<Base locale={locale} title={`${entry.data.title} — Diskarte`} description={entry.data.summary} ogType="article" jsonLd={jsonLd}>
+  <article class="section" style="border:none">
+    <div class="wrap" style="max-width:760px">
+      <p class="mono meta-line">
+        <a href={routes.notes[locale]} >← {locale === 'ja' ? 'ノート' : 'Notes'}</a>
+        <span aria-hidden="true"> · </span>{fmt.format(entry.data.date)}<span aria-hidden="true"> · </span>{entry.data.category}<span aria-hidden="true"> · </span>{entry.data.readingTime}
+      </p>
+      <h1 style="margin-top:16px;font-size:clamp(1.9rem,4.2vw,2.8rem)">{entry.data.title}</h1>
+      <p class="lede" style="margin-top:16px">{entry.data.summary}</p>
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</Base>
+<style is:global>
+  .meta-line { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .prose { margin-top: clamp(28px, 4vw, 44px); }
+  .prose h2 { margin-top: 2.2em; font-size: 1.4rem; }
+  .prose h3 { margin-top: 1.8em; }
+  .prose p { margin-top: 1em; color: var(--ink); }
+  .prose ul, .prose ol { margin: 1em 0 0 1.3em; }
+  .prose li { margin-top: 0.4em; }
+  .prose blockquote {
+    margin-top: 1.4em; border-left: 3px solid var(--steel);
+    padding: 4px 0 4px 18px; color: var(--muted); font-weight: 500;
+  }
+  .prose code {
+    font-family: var(--mono); font-size: 0.85em; background: var(--panel);
+    border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px;
+  }
+  .prose pre { margin-top: 1.2em; background: var(--dark); color: var(--dark-text); border-radius: 10px; padding: 18px 20px; overflow-x: auto; font-size: 0.85rem; }
+  .prose pre code { background: none; border: none; padding: 0; }
+  .prose a { color: var(--steel); }
+  .prose hr { border: none; border-top: 1px solid var(--line); margin: 2.4em 0; }
+</style>

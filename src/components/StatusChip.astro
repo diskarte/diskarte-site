@@ -1,0 +1,13 @@
+---
+import { ui, type Locale } from '../i18n/ui';
+interface Props { kind: 'vision' | 'arch' | 'impl' | 'depl' | 'plan'; locale: Locale; qual?: string }
+const { kind, locale, qual } = Astro.props;
+const label = ui[locale].status[kind];
+---
+<span class="chip-wrap">
+  <span class={`chip ${kind}`}><i aria-hidden="true"></i>{label}</span>
+  {qual && <span class="qual">{qual}</span>}
+</span>
+<style>
+  .chip-wrap { display: inline-flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+</style>

@@ -1,0 +1,48 @@
+---
+/** Generic governed-flow chain. Vertical on mobile, horizontal on wide screens
+    when `horizontal` is set. Steps: { nm, ds, kind?: 'gov'|'plain'|'dashed', note? } */
+interface Step { nm: string; ds?: string; kind?: 'gov' | 'plain' | 'dashed'; note?: string }
+interface Props { steps: readonly Step[]; horizontal?: boolean; ariaLabel: string }
+const { steps, horizontal = false, ariaLabel } = Astro.props;
+---
+<figure class="dg" role="img" aria-label={ariaLabel}>
+  <div class={`chain ${horizontal ? 'h' : ''}`}>
+    {steps.map((s, i) => (
+      <>
+        {i > 0 && (
+          <div class="link" aria-hidden="true">
+            <span class="glyph">↓</span>
+            {steps[i].note && <span class="note">{steps[i].note}</span>}
+          </div>
+        )}
+        <div class={`box ${s.kind ?? 'plain'} reveal`}>
+          <div class="nm">{s.nm}</div>
+          {s.ds && <div class="ds">{s.ds}</div>}
+        </div>
+      </>
+    ))}
+  </div>
+</figure>
+<style>
+  .chain { display: flex; flex-direction: column; align-items: stretch; max-width: 560px; }
+  .box {
+    background: var(--surface); border: 1.5px solid var(--steel-line);
+    border-radius: var(--r-md); padding: 14px 20px; text-align: left;
+  }
+  .box .nm { font-weight: 700; font-size: 1rem; letter-spacing: -0.012em; }
+  .box .ds { color: var(--muted); font-size: 0.84rem; margin-top: 2px; line-height: 1.45; }
+  .box.gov { background: var(--steel-soft); border-color: var(--steel); }
+  .box.gov .nm { color: var(--steel); }
+  .box.dashed { border-style: dashed; border-color: var(--faint); background: transparent; }
+  .box.dashed .nm { color: var(--muted); }
+  .link { display: flex; align-items: center; gap: 10px; padding: 5px 0 5px 22px; }
+  .glyph { color: var(--steel); font-weight: 700; }
+  .note { font-size: 0.75rem; color: var(--muted); font-style: normal; }
+  @media (min-width: 860px) {
+    .chain.h { flex-direction: row; align-items: stretch; max-width: none; gap: 0; }
+    .chain.h .box { flex: 1; }
+    .chain.h .link { padding: 0 10px; justify-content: center; flex-direction: column; gap: 4px; flex: none; align-self: center; }
+    .chain.h .glyph { transform: rotate(-90deg); }
+    .chain.h .note { max-width: 120px; text-align: center; font-size: 0.7rem; }
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+import StatusChip from './StatusChip.astro';
+import { type Locale } from '../i18n/ui';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = {
+  en: {
+    gf: 'Greenfield', gfSub: 'onboarding answers + environment evidence',
+    bf: 'Brownfield', bfSub: 'digital exhaust + environment evidence',
+    rec: 'Grounded recommendations', recSub: 'one advisory engine — never two',
+    intake: 'Intake', intakeSub: 'the single governed door',
+    runtime: 'Runtime', runtimeSub: 'identical objects; only provenance differs',
+    gfQual: 'end-to-end', bfQual: 'offline import proven; live connectors gated',
+    aria: 'Diagram: Greenfield evidence and Brownfield evidence both flow into grounded recommendations, then through Intake into the Runtime.',
+  },
+  ja: {
+    gf: 'グリーンフィールド', gfSub: 'オンボーディング回答 + 環境エビデンス',
+    bf: 'ブラウンフィールド', bfSub: 'デジタルの痕跡 + 環境エビデンス',
+    rec: '根拠つきの推奨', recSub: '推奨エンジンは常にひとつ',
+    intake: 'インテイク', intakeSub: '統治された唯一の入口',
+    runtime: 'ランタイム', runtimeSub: '同一のオブジェクト。異なるのは来歴だけ',
+    gfQual: 'エンドツーエンド', bfQual: 'オフライン取込は実証済み。ライブ連携はルーリング待ち',
+    aria: '図：グリーンフィールドとブラウンフィールドのエビデンスは、どちらも推奨を経てインテイクからランタイムへ到達します。',
+  },
+}[locale];
+---
+<figure class="dg" role="img" aria-label={t.aria}>
+  <div class="conv">
+    <div class="sources">
+      <div class="box reveal">
+        <div class="nm">{t.gf}</div>
+        <div class="ds">{t.gfSub}</div>
+        <div class="chipline"><StatusChip kind="impl" locale={locale} qual={t.gfQual} /></div>
+      </div>
+      <div class="box reveal">
+        <div class="nm">{t.bf}</div>
+        <div class="ds">{t.bfSub}</div>
+        <div class="chipline"><StatusChip kind="impl" locale={locale} qual={t.bfQual} /></div>
+      </div>
+    </div>
+    <div class="merge" aria-hidden="true"><span>↘</span><span>↗</span></div>
+    <div class="rest">
+      <div class="box reveal"><div class="nm">{t.rec}</div><div class="ds">{t.recSub}</div></div>
+      <div class="glyph" aria-hidden="true">↓</div>
+      <div class="box gov reveal"><div class="nm">{t.intake}</div><div class="ds">{t.intakeSub}</div></div>
+      <div class="glyph" aria-hidden="true">↓</div>
+      <div class="box gov reveal"><div class="nm">{t.runtime}</div><div class="ds">{t.runtimeSub}</div></div>
+    </div>
+  </div>
+</figure>
+<style>
+  .conv { display: grid; gap: 14px; grid-template-columns: 1fr; max-width: 900px; }
+  .sources { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  .box {
+    background: var(--surface); border: 1.5px solid var(--steel-line);
+    border-radius: var(--r-md); padding: 14px 18px;
+  }
+  .box .nm { font-weight: 700; }
+  .box .ds { color: var(--muted); font-size: 0.84rem; margin-top: 2px; }
+  .box.gov { background: var(--steel-soft); border-color: var(--steel); }
+  .box.gov .nm { color: var(--steel); }
+  .chipline { margin-top: 10px; }
+  .merge { display: none; }
+  .glyph { color: var(--steel); font-weight: 700; padding: 4px 0 4px 20px; }
+  @media (min-width: 900px) {
+    .conv { grid-template-columns: 5fr auto 5fr; align-items: center; }
+    .merge { display: flex; flex-direction: column; gap: 44px; color: var(--steel); font-weight: 700; font-size: 1.2rem; }
+  }
+</style>

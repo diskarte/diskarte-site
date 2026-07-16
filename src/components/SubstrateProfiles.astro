@@ -1,0 +1,50 @@
+---
+import StatusChip from './StatusChip.astro';
+import { type Locale } from '../i18n/ui';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = {
+  en: {
+    profiles: [
+      { nm: 'Local', ds: 'On-device only. Nothing leaves the boundary — the sovereignty default.', kind: 'impl' as const },
+      { nm: 'Diskarte Managed', ds: 'An org-owned appliance on Diskarte-operated compute — an explicit, adjudicated residency choice.', kind: 'impl' as const, qual: 'production deployment pending' },
+      { nm: 'Hybrid', ds: 'Local plus cloud APIs under your own keys, split by sensitivity class.', kind: 'arch' as const },
+      { nm: 'Cloud', ds: 'Your infrastructure, your endpoints, your credentials.', kind: 'arch' as const },
+      { nm: 'Air-Gapped', ds: 'Local only, with offline fulfillment via signed bundles — deferred by a recorded ruling, shown honestly as unavailable.', kind: 'plan' as const, qual: 'deferred by ruling' },
+    ],
+  },
+  ja: {
+    profiles: [
+      { nm: 'ローカル', ds: '端末内で完結。何も境界の外へ出ません — 主権のデフォルトです。', kind: 'impl' as const },
+      { nm: 'Diskarte マネージド', ds: '組織が所有するアプライアンスを Diskarte 運用の計算基盤で稼働 — 明示的に裁定された選択です。', kind: 'impl' as const, qual: '本番デプロイは未実施' },
+      { nm: 'ハイブリッド', ds: 'ローカルと、自社キーによるクラウドAPIを機微度で使い分けます。', kind: 'arch' as const },
+      { nm: 'クラウド', ds: '自社のインフラ、自社のエンドポイント、自社の資格情報で。', kind: 'arch' as const },
+      { nm: 'エアギャップ', ds: '完全オフライン。署名付きバンドルによる充足は、記録済みルーリングにより保留 — 「利用不可」と正直に表示します。', kind: 'plan' as const, qual: 'ルーリングにより保留' },
+    ],
+  },
+}[locale];
+---
+<div class="profiles">
+  {t.profiles.map((p) => (
+    <div class={`pcard reveal ${p.kind === 'plan' ? 'deferred' : ''}`}>
+      <div class="head">
+        <span class="nm">{p.nm}</span>
+        <StatusChip kind={p.kind} locale={locale} qual={p.qual} />
+      </div>
+      <p class="ds">{p.ds}</p>
+    </div>
+  ))}
+</div>
+<style>
+  .profiles { display: grid; gap: 12px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .profiles { grid-template-columns: 1fr 1fr; } }
+  .pcard {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--r-md); padding: 18px 20px;
+  }
+  .pcard.deferred { border-style: dashed; background: transparent; }
+  @media (min-width: 760px) { .pcard.deferred { grid-column: span 2; } }
+  .head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .nm { font-weight: 700; font-size: 1.02rem; }
+  .ds { color: var(--muted); font-size: 0.88rem; margin-top: 8px; max-width: none; }
+</style>

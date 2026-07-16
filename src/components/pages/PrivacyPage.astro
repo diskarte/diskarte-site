@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import { privacyPage } from '../../copy/meta';
+import { type Locale } from '../../i18n/ui';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = privacyPage[locale];
+---
+<Base locale={locale} title={t.meta.title} description={t.meta.description} noindex>
+  <section class="section" style="border:none">
+    <div class="wrap" style="max-width:720px">
+      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem)">{t.h1}</h1>
+      <p class="mono" style="margin-top:18px;font-size:.72rem;letter-spacing:.08em;color:#8a6317;border:1.4px dashed #8a6317;border-radius:8px;padding:10px 14px;display:inline-block">{t.draft}</p>
+      {t.body.map((p) => <p class="muted" style="margin-top:16px">{p}</p>)}
+    </div>
+  </section>
+</Base>

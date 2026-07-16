@@ -1,0 +1,55 @@
+---
+import { ui, routes, TALLY_URL, type Locale } from '../i18n/ui';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = ui[locale];
+const year = new Date().getFullYear();
+---
+<footer class="on-dark site-footer">
+  <div class="wrap grid">
+    <div class="brand-col">
+      <div class="brand">Diskarte</div>
+      <p class="tagline">{t.footer.tagline}</p>
+      <p class="draftnote">{t.footer.draft}</p>
+    </div>
+    <nav aria-label={t.footer.product}>
+      <div class="col-head">{t.footer.product}</div>
+      <a href={routes.runtime[locale]}>{t.nav.runtime}</a>
+      <a href={routes.architecture[locale]}>{t.nav.architecture}</a>
+      <a href={routes.overview[locale]}>{t.nav.overview}</a>
+      <a href={routes.alpha[locale]}>{t.nav.alpha}</a>
+    </nav>
+    <nav aria-label={t.footer.company}>
+      <div class="col-head">{t.footer.company}</div>
+      <a href={routes.about[locale]}>{t.nav.about}</a>
+      <a href={routes.notes[locale]}>{t.nav.notes}</a>
+      <a href={TALLY_URL} target="_blank" rel="noopener">{t.footer.contact}</a>
+      <a href={routes.privacy[locale]}>{t.footer.privacy}</a>
+    </nav>
+  </div>
+  <div class="wrap legal">
+    <span>© {year} {t.footer.rights}</span>
+    <span class="mono" style="font-size:.72rem;letter-spacing:.08em">DISKARTE.JP</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer { margin-top: 0; padding-top: clamp(48px, 7vw, 80px); }
+  .grid { display: grid; gap: 36px; grid-template-columns: 1fr; padding-bottom: 40px; }
+  @media (min-width: 760px) { .grid { grid-template-columns: 2fr 1fr 1fr; } }
+  .brand { font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; color: #f2f4f7; }
+  .tagline { margin-top: 8px; color: var(--sky); font-weight: 500; }
+  .draftnote { margin-top: 16px; font-size: 0.78rem; color: var(--dark-muted); max-width: 40ch; }
+  nav { display: flex; flex-direction: column; gap: 10px; }
+  .col-head {
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--dark-muted); margin-bottom: 4px;
+  }
+  nav a { color: var(--dark-text); text-decoration: none; font-size: 0.92rem; }
+  nav a:hover { color: #fff; }
+  .legal {
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    border-top: 1px solid var(--dark-line); padding-block: 22px;
+    color: var(--dark-muted); font-size: 0.82rem; flex-wrap: wrap;
+  }
+</style>

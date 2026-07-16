@@ -1,0 +1,325 @@
+---
+import Base from '../../layouts/Base.astro';
+import LayerDiagram from '../LayerDiagram.astro';
+import FlowChain from '../FlowChain.astro';
+import ConvergenceDiagram from '../ConvergenceDiagram.astro';
+import SubstrateProfiles from '../SubstrateProfiles.astro';
+import ProductSurface from '../ProductSurface.astro';
+import DoctrineQuote from '../DoctrineQuote.astro';
+import OverviewPreview from '../OverviewPreview.astro';
+import CtaSection from '../CtaSection.astro';
+import StatusChip from '../StatusChip.astro';
+import { home } from '../../copy/home';
+import { ui, routes, type Locale } from '../../i18n/ui';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = home[locale];
+const u = ui[locale];
+const s = t.product.surfaces;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Diskarte',
+    url: 'https://diskarte.jp',
+    logo: 'https://diskarte.jp/favicon.svg',
+    founder: { '@type': 'Person', name: 'Margaux Flores', jobTitle: 'Founder & Principal Engineer' },
+    description: t.meta.description,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Diskarte',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'macOS',
+    description: t.meta.description,
+    offers: { '@type': 'Offer', availability: 'https://schema.org/PreOrder', description: 'Design-partner alpha, by application.' },
+  },
+];
+---
+<Base locale={locale} title={t.meta.title} description={t.meta.description} jsonLd={jsonLd}>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow reveal">{t.hero.eyebrow}</p>
+        <h1 class="reveal">{t.hero.h1a}<br />{t.hero.h1b}</h1>
+        <p class="lede reveal" style="margin-top:20px">{t.hero.lede}</p>
+        <div class="hero-ctas reveal">
+          <a class="btn primary" href={routes.runtime[locale]}>{t.hero.ctaPrimary}</a>
+          <a class="btn" href={routes.overview[locale]}>{t.hero.ctaSecondary}</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <LayerDiagram locale={locale} compact />
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="section" id="problem">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">{t.problem.eyebrow}</p>
+        <h2>{t.problem.h2}</h2>
+      </div>
+      <div class="grid3">
+        {t.problem.cards.map((c) => (
+          <div class="card card-pad reveal">
+            <p class="eyebrow" style="font-size:.64rem">{c.k}</p>
+            <h3 style="margin-top:10px">{c.h}</h3>
+            <p class="muted" style="margin-top:10px;font-size:.92rem">{c.p}</p>
+          </div>
+        ))}
+      </div>
+      <p class="close-line reveal">{t.problem.close}</p>
+    </div>
+  </section>
+
+  <!-- MISSING LAYER -->
+  <section class="section" id="missing-layer">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">{t.missing.eyebrow}</p>
+        <h2 style="margin-top:12px">{t.missing.h2}</h2>
+        <p class="lede" style="margin-top:16px">{t.missing.lede}</p>
+        <p style="margin-top:18px;font-weight:600">{t.missing.law}</p>
+      </div>
+      <LayerDiagram locale={locale} />
+    </div>
+  </section>
+
+  <!-- PRODUCT REALITY -->
+  <section class="section" id="product">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">{t.product.eyebrow}</p>
+        <h2>{t.product.h2}</h2>
+        <p class="lede">{t.product.lede}</p>
+      </div>
+
+      <ProductSurface locale={locale} title={s.brief.title} value={s.brief.value} reason={s.brief.reason} kind="impl">
+        <p class="ui-eyebrow" style="color:var(--steel)">{s.brief.ui.eyebrow}</p>
+        <p style="font-weight:700;font-size:1.05rem;margin-top:6px;letter-spacing:-.015em">{s.brief.ui.head}</p>
+        <div class="grid2" style="gap:12px;margin-top:14px">
+          <div>
+            <p class="ui-eyebrow" style="color:var(--red)">{s.brief.ui.now}</p>
+            {s.brief.ui.items.map((i) => <div class="mini-card">{i}</div>)}
+          </div>
+          <div>
+            <p class="ui-eyebrow" style="color:var(--muted)">{s.brief.ui.wait}</p>
+            {s.brief.ui.waits.map((i) => <div class="mini-card quiet">{i}</div>)}
+          </div>
+        </div>
+      </ProductSurface>
+
+      <ProductSurface locale={locale} title={s.memory.title} value={s.memory.value} reason={s.memory.reason} kind="impl" flip>
+        <p class="ui-eyebrow" style="color:var(--steel)">{s.memory.ui.eyebrow}</p>
+        <div class="grid2" style="gap:10px;margin-top:12px">
+          {s.memory.ui.strata.map(([h, d], i) => (
+            <div class={`mini-card ${i === 1 ? 'alert' : ''} ${i === 4 ? 'steel' : ''}`}>
+              <strong style="font-size:.86rem">{h}</strong>
+              <span class="muted" style="display:block;font-size:.76rem">{d}</span>
+            </div>
+          ))}
+        </div>
+      </ProductSurface>
+
+      <ProductSurface locale={locale} title={s.judgment.title} value={s.judgment.value} reason={s.judgment.reason} kind="impl">
+        <p class="ui-eyebrow" style="color:var(--steel)">{s.judgment.ui.eyebrow}</p>
+        <div class="mini-card" style="margin-top:12px">
+          <strong style="font-size:.92rem">{s.judgment.ui.card}</strong>
+          <span class="muted" style="display:block;font-size:.78rem;margin-top:4px">{s.judgment.ui.meta}</span>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+          {s.judgment.ui.actions.map((a) => (
+            <span class="mini-btn">{a}</span>
+          ))}
+        </div>
+      </ProductSurface>
+
+      <ProductSurface locale={locale} title={s.practices.title} value={s.practices.value} reason={s.practices.reason} kind="impl" flip>
+        <p class="ui-eyebrow" style="color:var(--steel)">{s.practices.ui.eyebrow}</p>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+          {s.practices.ui.steps.map(([h, d], i) => (
+            <>
+              {i > 0 && <span style="color:var(--steel);font-weight:700;padding-left:16px" aria-hidden="true">↓</span>}
+              <div class={`mini-card ${i === 1 ? 'steel' : ''}`}>
+                <strong style="font-size:.88rem">{h}</strong>
+                <span class="muted" style="display:block;font-size:.76rem">{d}</span>
+              </div>
+            </>
+          ))}
+        </div>
+      </ProductSurface>
+
+      <ProductSurface locale={locale} title={s.onboarding.title} value={s.onboarding.value} reason={s.onboarding.reason} kind="impl" qual={s.onboarding.qual}>
+        <p class="ui-eyebrow" style="color:var(--steel)">{s.onboarding.ui.eyebrow}</p>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+          <div class="mini-card ok"><strong style="font-size:.88rem">{s.onboarding.ui.rec}</strong><span class="muted" style="display:block;font-size:.76rem">{s.onboarding.ui.recSub}</span></div>
+          <div class="mini-card"><strong style="font-size:.88rem">{s.onboarding.ui.alt}</strong><span class="muted" style="display:block;font-size:.76rem">{s.onboarding.ui.altSub}</span></div>
+          <div class="mini-card dashed"><strong style="font-size:.88rem;color:var(--muted)">{s.onboarding.ui.gap}</strong><span class="muted" style="display:block;font-size:.76rem">{s.onboarding.ui.gapSub}</span></div>
+        </div>
+      </ProductSurface>
+    </div>
+  </section>
+
+  <!-- GOVERNANCE -->
+  <section class="section" id="governance">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">{t.governance.eyebrow}</p>
+        <h2 style="margin-top:12px">{t.governance.h2}</h2>
+        <p class="lede" style="margin-top:16px">{t.governance.lede}</p>
+        <p style="margin-top:20px;font-weight:700;letter-spacing:-.01em">{t.governance.law}</p>
+      </div>
+      <FlowChain steps={t.governance.steps} ariaLabel={t.governance.aria} />
+    </div>
+  </section>
+
+  <DoctrineQuote dark text={locale === 'ja' ? 'エビデンスは真実ではない。そしてエビデンスはカノンではない。' : 'Evidence is not truth, and evidence is not canon.'} sub={locale === 'ja' ? 'ランタイムはエビデンスから最も正当なモデルを構築します。しかし、人間が承認するまで、何も統治しません。' : 'The runtime builds the strongest justified model from evidence — and nothing governs until a human ratifies it into canon.'} />
+
+  <!-- CONVERGENCE -->
+  <section class="section" id="convergence">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">{t.convergence.eyebrow}</p>
+        <h2>{t.convergence.h2}</h2>
+        <p class="lede">{t.convergence.lede}</p>
+      </div>
+      <ConvergenceDiagram locale={locale} />
+      <p class="close-line reveal">{t.convergence.law}</p>
+    </div>
+  </section>
+
+  <!-- SUBSTRATE -->
+  <section class="section" id="substrate">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">{t.substrate.eyebrow}</p>
+        <h2>{t.substrate.h2}</h2>
+        <p class="lede">{t.substrate.lede}</p>
+      </div>
+      <SubstrateProfiles locale={locale} />
+      <div class="law-card reveal">
+        <p style="font-weight:800;font-size:1.25rem;letter-spacing:-.02em">{t.substrate.law}</p>
+        <p class="muted" style="margin-top:8px;font-size:.94rem">{t.substrate.lawSub}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATUS -->
+  <section class="section" id="status">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">{t.status.eyebrow}</p>
+        <h2>{t.status.h2}</h2>
+        <p class="lede">{t.status.lede}</p>
+      </div>
+      <div class="status-cols">
+        <div class="card card-pad reveal">
+          <h3>{t.status.builtHead}</h3>
+          <ul class="status-list">
+            {t.status.built.map(([item, kind]) => (
+              <li><span>{item}</span><StatusChip kind={kind as 'impl' | 'depl'} locale={locale} /></li>
+            ))}
+          </ul>
+        </div>
+        <div class="status-side">
+          <div class="card card-pad reveal">
+            <h3>{t.status.nextHead}</h3>
+            <ul class="status-list plain">
+              {t.status.next.map((i) => <li><span>{i}</span><StatusChip kind="plan" locale={locale} /></li>)}
+            </ul>
+          </div>
+          <div class="card card-pad reveal" style="border-style:dashed;background:transparent;box-shadow:none">
+            <h3 class="muted">{t.status.laterHead}</h3>
+            <ul class="status-list plain">
+              {t.status.later.map((i) => <li><span class="muted">{i}</span><StatusChip kind="vision" locale={locale} /></li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p class="honesty reveal">{t.status.honesty}</p>
+    </div>
+  </section>
+
+  <!-- TECHNICAL OVERVIEW -->
+  <section class="section" id="technical-depth">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">{t.overview.eyebrow}</p>
+        <h2>{t.overview.h2}</h2>
+      </div>
+      <OverviewPreview locale={locale} title={t.overview.title} body={t.overview.body} view={t.overview.view} download={t.overview.download} explore={t.overview.explore} />
+    </div>
+  </section>
+
+  <!-- FOUNDER -->
+  <section class="section" id="founder">
+    <div class="wrap founder-grid">
+      <div class="portrait reveal">
+        <img src="/assets/margaux-flores.jpg" alt={locale === 'ja' ? '創業者 Margaux Flores のポートレート' : 'Portrait of Margaux Flores, founder of Diskarte'} width="440" height="440" loading="lazy" decoding="async" />
+      </div>
+      <div>
+        <p class="eyebrow">{t.founder.eyebrow}</p>
+        <h2 style="margin-top:12px">{t.founder.name}</h2>
+        <p class="mono" style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);margin-top:8px">{t.founder.role}</p>
+        <p style="margin-top:22px">{t.founder.body1}</p>
+        <p style="margin-top:14px">{t.founder.body2}</p>
+        <p style="margin-top:14px;font-weight:600">{t.founder.body3}</p>
+        <p style="margin-top:22px"><a href={routes.about[locale]}>{t.founder.link} →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <CtaSection locale={locale} title={t.cta.title} body={t.cta.body} />
+</Base>
+
+<style>
+  .hero { padding-block: clamp(56px, 9vw, 120px) clamp(48px, 7vw, 96px); }
+  .hero-grid { display: grid; gap: clamp(36px, 6vw, 72px); grid-template-columns: 1fr; align-items: center; }
+  @media (min-width: 940px) { .hero-grid { grid-template-columns: 6fr 5fr; } }
+  .hero-ctas { display: flex; gap: 14px; margin-top: 30px; flex-wrap: wrap; }
+  .close-line {
+    margin-top: clamp(26px, 4vw, 40px); font-weight: 600; font-size: 1.08rem;
+    max-width: 62ch; border-left: 3px solid var(--steel);
+    padding: 6px 0 6px 18px; letter-spacing: -0.01em;
+  }
+  .ui-eyebrow { font-family: var(--mono); font-size: 0.6rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+  .mini-card {
+    border: 1px solid var(--line); border-radius: 9px; background: var(--panel);
+    padding: 9px 12px; font-size: 0.84rem; margin-top: 8px;
+  }
+  .mini-card.quiet { background: transparent; color: var(--muted); }
+  .mini-card.alert { border-color: rgba(176, 65, 58, 0.4); }
+  .mini-card.steel { border-color: var(--steel-line); background: var(--steel-soft); }
+  .mini-card.ok { border-color: rgba(63, 122, 94, 0.45); }
+  .mini-card.dashed { border-style: dashed; background: transparent; }
+  .mini-btn {
+    border: 1.4px solid var(--line); border-radius: 999px; padding: 6px 16px;
+    font-size: 0.82rem; font-weight: 600; color: var(--ink); background: var(--surface);
+  }
+  .law-card {
+    margin-top: 26px; background: var(--steel-soft); border: 1.4px solid var(--steel-line);
+    border-radius: var(--r-md); padding: 22px 26px;
+  }
+  .status-cols { display: grid; gap: 18px; grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 900px) { .status-cols { grid-template-columns: 1.1fr 1fr; } }
+  .status-side { display: grid; gap: 18px; }
+  .status-list { list-style: none; margin-top: 14px; }
+  .status-list li {
+    display: flex; justify-content: space-between; gap: 14px; align-items: center;
+    padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 0.9rem;
+  }
+  .status-list li:last-child { border-bottom: none; }
+  .honesty {
+    margin-top: 26px; color: var(--muted); font-size: 0.94rem; max-width: 72ch;
+    border-left: 3px solid var(--amber); padding: 6px 0 6px 18px;
+  }
+  .founder-grid { display: grid; gap: clamp(28px, 5vw, 64px); grid-template-columns: 1fr; align-items: center; }
+  @media (min-width: 860px) { .founder-grid { grid-template-columns: 4fr 7fr; } }
+  .portrait img { width: 100%; max-width: 440px; height: auto; border-radius: var(--r-lg); box-shadow: var(--shadow); }
+</style>

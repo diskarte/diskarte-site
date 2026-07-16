@@ -1,0 +1,64 @@
+---
+import Base from '../../layouts/Base.astro';
+import CtaSection from '../CtaSection.astro';
+import { aboutPage } from '../../copy/meta';
+import { home } from '../../copy/home';
+import { type Locale } from '../../i18n/ui';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = aboutPage[locale];
+const cta = home[locale].cta;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Margaux Flores',
+    jobTitle: 'Founder & Principal Engineer',
+    worksFor: { '@type': 'Organization', name: 'Diskarte', url: 'https://diskarte.jp' },
+    image: 'https://diskarte.jp/assets/margaux-flores.jpg',
+  },
+];
+---
+<Base locale={locale} title={t.meta.title} description={t.meta.description} jsonLd={jsonLd}>
+  <section class="section" style="border:none">
+    <div class="wrap about-grid">
+      <div class="portrait reveal">
+        <img src="/assets/margaux-flores.jpg" alt={t.photoAlt} width="440" height="440" loading="eager" decoding="async" />
+        <div style="margin-top:18px">
+          <div style="font-weight:800;font-size:1.25rem;letter-spacing:-.02em">{t.name}</div>
+          <div class="mono" style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);margin-top:6px">{t.role}</div>
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow">{t.hero.eyebrow}</p>
+        <h1 style="margin-top:14px;font-size:clamp(2rem,4.4vw,2.9rem)">{t.hero.h1}</h1>
+        {t.story.map((p, i) => (
+          <p style={`margin-top:${i === 0 ? '24' : '16'}px;${i === t.story.length - 1 ? 'font-weight:600' : ''}`} class={i === t.story.length - 1 ? '' : 'muted'}>{p}</p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head"><h2>{t.facts.head}</h2></div>
+      <div class="table-frame reveal" style="max-width:860px">
+        <table class="mx">
+          <tbody>
+            {t.facts.items.map(([k, v]) => (
+              <tr><td style="width:160px">{k}</td><td class="muted">{v}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <CtaSection locale={locale} title={cta.title} body={cta.body} />
+</Base>
+
+<style>
+  .about-grid { display: grid; gap: clamp(28px, 5vw, 64px); grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 860px) { .about-grid { grid-template-columns: 4fr 7fr; } }
+  .portrait img { width: 100%; max-width: 420px; height: auto; border-radius: var(--r-lg); box-shadow: var(--shadow); }
+</style>

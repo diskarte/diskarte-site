@@ -1,0 +1,70 @@
+---
+/** The missing-layer diagram: organization / Diskarte / execution machinery. */
+import { type Locale } from '../i18n/ui';
+interface Props { locale: Locale; compact?: boolean }
+const { locale, compact = false } = Astro.props;
+const t = {
+  en: {
+    org: 'The organization',
+    orgSub: 'strategy · authority · commitments · accumulated judgment',
+    runtime: 'Diskarte — the Organizational Runtime',
+    runtimeSub: 'governance · memory · judgment · delegation · execution',
+    exec: 'Execution machinery',
+    execSub: 'models · agents · retrieval · tools · providers',
+    replaceable: 'replaceable, by design',
+    aria: 'Diagram: the organization sits above Diskarte, the Organizational Runtime, which governs replaceable execution machinery below it.',
+  },
+  ja: {
+    org: '組織',
+    orgSub: '戦略 · 権限 · コミットメント · 蓄積された判断',
+    runtime: 'Diskarte — 組織のためのランタイム',
+    runtimeSub: 'ガバナンス · 記憶 · 判断 · 委任 · 実行',
+    exec: '実行レイヤー',
+    execSub: 'モデル · エージェント · 検索 · ツール · プロバイダー',
+    replaceable: '設計上、交換可能',
+    aria: '図：組織の下に Diskarte（組織ランタイム）があり、その下の交換可能な実行レイヤーを統治します。',
+  },
+}[locale];
+---
+<figure class="dg" role="img" aria-label={t.aria}>
+  <div class={`stack ${compact ? 'compact' : ''}`}>
+    <div class="layer plain reveal">
+      <div class="nm">{t.org}</div>
+      <div class="ds">{t.orgSub}</div>
+    </div>
+    <div class="arrow" aria-hidden="true">↓</div>
+    <div class="layer steel reveal">
+      <div class="nm">{t.runtime}</div>
+      <div class="ds">{t.runtimeSub}</div>
+    </div>
+    <div class="arrow" aria-hidden="true">↓</div>
+    <div class="layer plain exec reveal">
+      <div class="nm">{t.exec}</div>
+      <div class="ds">{t.execSub}</div>
+      <span class="swap">{t.replaceable}</span>
+    </div>
+  </div>
+</figure>
+<style>
+  .stack { display: flex; flex-direction: column; align-items: stretch; max-width: 640px; }
+  .layer {
+    background: var(--surface); border: 1.5px solid var(--line);
+    border-radius: var(--r-md); padding: 18px 22px; position: relative;
+    box-shadow: var(--shadow);
+  }
+  .compact .layer { padding: 13px 18px; }
+  .layer .nm { font-weight: 700; font-size: 1.05rem; letter-spacing: -0.015em; }
+  .layer .ds { color: var(--muted); font-size: 0.85rem; margin-top: 3px; font-family: var(--mono); letter-spacing: 0.01em; }
+  .layer.steel { border-color: var(--steel); background: var(--steel-soft); }
+  .layer.steel .nm { color: var(--steel); }
+  .layer.steel .ds { color: #35506f; }
+  .layer.exec { border-style: dashed; }
+  .arrow { text-align: center; color: var(--steel); font-weight: 700; padding: 6px 0; font-size: 1.05rem; }
+  .swap {
+    position: absolute; top: -11px; right: 14px;
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted);
+    background: var(--bg); border: 1px dashed var(--faint);
+    padding: 2px 8px; border-radius: 6px;
+  }
+</style>

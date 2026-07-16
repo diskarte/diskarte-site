@@ -1,0 +1,21 @@
+---
+import { ui, routes, TALLY_URL, type Locale } from '../i18n/ui';
+interface Props { locale: Locale; title: string; body: string }
+const { locale, title, body } = Astro.props;
+const t = ui[locale];
+---
+<section class="section on-dark cta-section">
+  <div class="wrap inner">
+    <h2 class="reveal">{title}</h2>
+    <p class="reveal">{body}</p>
+    <div class="row reveal">
+      <a class="btn on-dark primary" href={TALLY_URL} target="_blank" rel="noopener">{t.cta.alpha} ↗</a>
+      <a class="btn on-dark" href={routes.overview[locale]}>{t.cta.overview}</a>
+    </div>
+  </div>
+</section>
+<style>
+  .inner { max-width: 760px; }
+  .inner p { margin-top: 18px; font-size: 1.05rem; line-height: 1.65; }
+  .row { display: flex; gap: 14px; margin-top: 30px; flex-wrap: wrap; }
+</style>

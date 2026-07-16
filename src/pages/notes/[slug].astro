@@ -1,0 +1,10 @@
+---
+import { getCollection } from 'astro:content';
+import NotePage from '../../components/pages/NotePage.astro';
+export async function getStaticPaths() {
+  const entries = await getCollection('notes', ({ data }) => data.lang === 'en' && !data.draft);
+  return entries.map((entry) => ({ params: { slug: entry.id.replace(/\.en$/, '') }, props: { entry } }));
+}
+const { entry } = Astro.props;
+---
+<NotePage locale="en" entry={entry} />

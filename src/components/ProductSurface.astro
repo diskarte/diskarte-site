@@ -1,0 +1,60 @@
+---
+/** A product surface entry: value statement, status, reason, and a schematic slot. */
+import StatusChip from './StatusChip.astro';
+import { ui, type Locale } from '../i18n/ui';
+interface Props {
+  locale: Locale;
+  title: string;
+  value: string;
+  reason: string;
+  kind: 'vision' | 'arch' | 'impl' | 'depl' | 'plan';
+  qual?: string;
+  flip?: boolean;
+}
+const { locale, title, value, reason, kind, qual, flip = false } = Astro.props;
+const t = ui[locale];
+---
+<article class={`surface ${flip ? 'flip' : ''}`}>
+  <div class="text reveal">
+    <h3>{title}</h3>
+    <p class="value">{value}</p>
+    <div class="chips"><StatusChip kind={kind} locale={locale} qual={qual} /></div>
+    <p class="reason"><strong>{locale === 'ja' ? '存在理由：' : 'Why it exists: '}</strong>{reason}</p>
+  </div>
+  <div class="visual reveal">
+    <div class="frame">
+      <div class="topbar" aria-hidden="true"><i></i><i></i><i></i><span>Diskarte</span></div>
+      <div class="body"><slot /></div>
+    </div>
+    <span class="schematic-badge">{t.schematic}</span>
+  </div>
+</article>
+<style>
+  .surface { display: grid; gap: 22px; grid-template-columns: 1fr; align-items: center; padding-block: clamp(24px, 4vw, 44px); }
+  .surface + .surface { border-top: 1px solid var(--line); }
+  @media (min-width: 900px) {
+    .surface { grid-template-columns: 4fr 6fr; gap: clamp(32px, 5vw, 64px); }
+    .surface.flip .text { order: 2; }
+    .surface.flip .visual { order: 1; }
+  }
+  h3 { font-size: 1.35rem; }
+  .value { margin-top: 10px; color: var(--ink); font-size: 1.02rem; }
+  .chips { margin-top: 14px; }
+  .reason { margin-top: 14px; color: var(--muted); font-size: 0.88rem; }
+  .visual { position: relative; }
+  .frame {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--r-lg); box-shadow: var(--shadow); overflow: hidden;
+  }
+  .topbar {
+    height: 34px; border-bottom: 1px solid var(--line); background: var(--panel);
+    display: flex; align-items: center; gap: 7px; padding: 0 14px;
+  }
+  .topbar i { width: 8px; height: 8px; border-radius: 99px; background: var(--line); }
+  .topbar span {
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--muted); margin-left: 6px;
+  }
+  .body { padding: 18px 20px; }
+  .schematic-badge { position: absolute; top: -10px; right: 12px; }
+</style>

@@ -1,0 +1,80 @@
+---
+import Base from '../../layouts/Base.astro';
+import StatusChip from '../StatusChip.astro';
+import DoctrineQuote from '../DoctrineQuote.astro';
+import CtaSection from '../CtaSection.astro';
+import LayerDiagram from '../LayerDiagram.astro';
+import { runtime } from '../../copy/depth';
+import { routes, type Locale } from '../../i18n/ui';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = runtime[locale];
+---
+<Base locale={locale} title={t.meta.title} description={t.meta.description}>
+  <section class="section" style="border:none">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">{t.hero.eyebrow}</p>
+        <h1 style="margin-top:14px;font-size:clamp(2rem,4.6vw,3.1rem)">{t.hero.h1}</h1>
+        <p class="lede" style="margin-top:18px">{t.hero.lede}</p>
+        <p class="muted" style="margin-top:14px">{t.hero.sub}</p>
+      </div>
+      <LayerDiagram locale={locale} compact />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">{t.anatomy.eyebrow}</p>
+        <h2>{t.anatomy.h2}</h2>
+        <p class="lede">{t.anatomy.lede}</p>
+      </div>
+      <div class="grid3">
+        {t.anatomy.parts.map((p) => (
+          <div class="card card-pad reveal">
+            <div style="display:flex;justify-content:space-between;gap:10px;align-items:start;flex-wrap:wrap">
+              <h3 style="font-size:1.02rem">{p.nm}</h3>
+              <StatusChip kind={p.kind as 'impl' | 'depl'} locale={locale} />
+            </div>
+            <p class="muted" style="margin-top:10px;font-size:.88rem">{p.ds}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <DoctrineQuote dark text={locale === 'ja' ? 'あらゆる真実に、所有者はちょうど一人。' : 'Every truth has exactly one owner.'} sub={t.ownership.lede} />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">{t.ownership.eyebrow}</p>
+        <h2>{t.ownership.h2}</h2>
+      </div>
+      <div class="table-frame table-scroll reveal">
+        <table class="mx">
+          <thead><tr>{t.ownership.cols.map((c) => <th>{c}</th>)}</tr></thead>
+          <tbody>
+            {t.ownership.rows.map(([a, b, c]) => (
+              <tr><td>{a}</td><td>{b}</td><td class="muted">{c}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">{t.provenance.eyebrow}</p>
+        <h2>{t.provenance.h2}</h2>
+        <p class="lede">{t.provenance.lede}</p>
+      </div>
+      <p><a href={routes.architecture[locale]}>{t.provenance.link} →</a></p>
+    </div>
+  </section>
+
+  <CtaSection locale={locale} title={t.cta.title} body={t.cta.body} />
+</Base>
