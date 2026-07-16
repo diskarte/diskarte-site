@@ -13,7 +13,7 @@ export const home = {
       h1b: 'Runtime.',
       lede: 'AI made execution fast. Diskarte keeps the organization coherent — constitutional governance, memory, and judgment, so autonomy can grow safely.',
       ctaPrimary: 'Explore the Runtime',
-      ctaSecondary: 'Read the Technical Overview',
+      ctaSecondary: 'Explore the Architecture',
     },
     problem: {
       eyebrow: 'The problem',
@@ -129,13 +129,6 @@ export const home = {
       later: ['Publisher ecosystem', 'Marketplace', 'Broader connectors', 'The organizational operating-system evolution'],
       honesty: 'Zero external organizations have used Diskarte yet, and production Managed deployment has intentionally not happened. The current focus is dogfooding, UX, distribution, and first deployments.',
     },
-    overview: {
-      eyebrow: 'Technical depth',
-      h2: 'The complete mental model, in one document',
-      title: 'The Diskarte Technical Overview',
-      body: 'The complete architecture, product model, implementation status, and roadmap — 83 pages, written for engineers, with implemented and planned capabilities never conflated.',
-      explore: 'Explore the Architecture',
-    },
     founder: {
       eyebrow: 'Founder',
       name: 'Margaux Flores',
@@ -162,7 +155,7 @@ export const home = {
       h1b: 'ランタイム。',
       lede: 'AIは実行を速くしました。Diskarteは組織の一貫性を守ります — ガバナンス・記憶・判断のレイヤーで、自律性を安全に育てるために。',
       ctaPrimary: 'ランタイムを見る',
-      ctaSecondary: '技術概要を読む',
+      ctaSecondary: 'アーキテクチャを見る',
     },
     problem: {
       eyebrow: '課題',
@@ -277,13 +270,6 @@ export const home = {
       ],
       later: ['パブリッシャー・エコシステム', 'マーケットプレイス', 'コネクターの拡充', '「組織のOS」への進化'],
       honesty: '外部組織による利用はまだゼロであり、マネージドの本番デプロイは意図的に行っていません。現在の焦点は、ドッグフーディング、UX、配布、そして最初のデプロイです。',
-    },
-    overview: {
-      eyebrow: '技術的な深さ',
-      h2: '完全なメンタルモデルを、1つのドキュメントで',
-      title: 'Diskarte 技術概要',
-      body: 'アーキテクチャ、プロダクトモデル、実装ステータス、ロードマップの全体像 — 全83ページ。エンジニアのために書かれ、実装済みと計画中を決して混同しません。（本文は英語です）',
-      explore: 'アーキテクチャを見る',
     },
     founder: {
       eyebrow: '創業者',

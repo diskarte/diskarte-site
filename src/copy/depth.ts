@@ -47,7 +47,7 @@ export const runtime = {
       lede: 'Every machine-produced artifact durably records what produced it and what judged it — model, provider kind, resource, grounding — as evidence attached to the work, never as a gate. Requests address capabilities, never models; the schema refuses vendor names inside the constitution.',
       link: 'Go deeper: the Architecture page',
     },
-    cta: { title: 'See the whole machine.', body: 'The Technical Overview covers the runtime end to end — architecture, product model, implementation status, and roadmap — with implemented and planned capabilities never conflated.' },
+    cta: { title: 'Build with us.', body: 'Apply to become a design partner and help shape the runtime against real organizational needs.' },
   },
   ja: {
     meta: { title: '組織のためのランタイム — Diskarte', description: '組織ランタイムとは何か：交換可能なAI実行レイヤーを取り囲む、憲法的ガバナンス・記憶・判断・委任 — そして「どの真実を誰が所有するか」。' },
@@ -95,14 +95,14 @@ export const runtime = {
       lede: '機械が生成したすべての成果物は、何が生成し何が判断したか — モデル、プロバイダー種別、リソース、根拠 — を永続的に記録します。それは仕事に付随するエビデンスであって、ゲートではありません。リクエストが指すのはケイパビリティであって、モデルではありません。憲法へのベンダー名の混入は、スキーマが拒否します。',
       link: 'さらに深く：アーキテクチャページへ',
     },
-    cta: { title: '全体像を見る。', body: '技術概要は、アーキテクチャ、プロダクトモデル、実装ステータス、ロードマップまで、ランタイムの全体をカバーします。実装済みと計画中を決して混同しません。' },
+    cta: { title: '一緒に構築する。', body: 'デザインパートナーとして参加し、実際の組織ニーズに基づくランタイムの形成にご協力ください。' },
   },
 } as const satisfies Record<Locale, unknown>;
 
 export const architecture = {
   en: {
     meta: { title: 'Architecture — Diskarte', description: 'The public architecture of the Organizational Runtime: kernel primitives, computed authority, the cognition boundary, memory planes, the epistemic pipeline, substrate abstraction, and federation.' },
-    hero: { eyebrow: 'Architecture', h1: 'Boundaries first', lede: 'Diskarte’s major architectural boundaries are either enforced in implementation, established in approved doctrine, or explicitly tracked as implementation awaiting ratification. This page is the public map. The Technical Overview carries the full detail.' },
+    hero: { eyebrow: 'Architecture', h1: 'Boundaries first', lede: 'Diskarte’s major architectural boundaries are either enforced in implementation, established in approved doctrine, or explicitly tracked as implementation awaiting ratification. This page is the public map.' },
     concepts: [
       { h: 'Runtime anatomy', p: 'A native Desktop and an Organization Console speak to one Platform API. Behind it, a governed core: a pure kernel, orchestration, governance gates, judgment, memory, and projections — with cognition and substrate held at the edges behind ports. Deployment simplifies; architecture does not: the whole runtime can run as one local binary with every boundary intact.' },
       { h: 'Seven kernel primitives', p: 'Actor, Role, Boundary, Decision, WorkOrder, Artifact, Evaluation — and deliberately no eighth. The kernel decides all authority and never reasons, never names a substrate, and never declares completion without Evaluation.' },
@@ -118,12 +118,12 @@ export const architecture = {
     ],
     doctrineText: 'Cognition reasons. It never governs.',
     doctrineSub: 'The kernel decides all authority and never reasons; cognition reasons and never decides. The seam between them is the product.',
-    ctaTitle: 'The full detail lives in the Technical Overview.',
-    ctaBody: '83 pages: every subsystem, every boundary, every status — with a diligence appendix for the identifiers and decision records this page deliberately omits.',
+    ctaTitle: 'Help shape the next stage.',
+    ctaBody: 'Apply as a design partner to test these boundaries against real organizational needs.',
   },
   ja: {
     meta: { title: 'アーキテクチャ — Diskarte', description: '組織ランタイムの公開アーキテクチャ：カーネル・プリミティブ、計算される権限、認知境界、2つの記憶、認識のパイプライン、サブストレート抽象化、フェデレーション。' },
-    hero: { eyebrow: 'アーキテクチャ', h1: '境界がすべてに先立つ', lede: 'Diskarteの主要なアーキテクチャ境界は、実装で強制されているか、承認済みドクトリンで確立されているか、あるいは「承認待ちの実装」として明示的に追跡されています。このページは公開マップです。全詳細は技術概要にあります。' },
+    hero: { eyebrow: 'アーキテクチャ', h1: '境界がすべてに先立つ', lede: 'Diskarteの主要なアーキテクチャ境界は、実装で強制されているか、承認済みドクトリンで確立されているか、あるいは「承認待ちの実装」として明示的に追跡されています。このページは公開マップです。' },
     concepts: [
       { h: 'ランタイムの解剖図', p: 'ネイティブのデスクトップと組織コンソールは、ひとつのプラットフォームAPIと対話します。その背後に統治されたコア — 純粋なカーネル、オーケストレーション、ガバナンスのゲート、判断、記憶、プロジェクション — があり、認知とサブストレートはポートの背後の端に置かれます。デプロイは単純化しても、アーキテクチャは単純化しません。全体をひとつのローカルバイナリとして、すべての境界を保ったまま実行できます。' },
       { h: '7つのカーネル・プリミティブ', p: 'Actor、Role、Boundary、Decision、WorkOrder、Artifact、Evaluation — そして意図的に8つ目はありません。カーネルはすべての権限を決定し、決して推論せず、サブストレートを名指しせず、Evaluationなしに完了を宣言しません。' },
@@ -139,7 +139,7 @@ export const architecture = {
     ],
     doctrineText: '認知は推論する。決して統治しない。',
     doctrineSub: 'カーネルはすべての権限を決定し、決して推論しない。認知は推論し、決して決定しない。その間のシームこそがプロダクトです。',
-    ctaTitle: '全詳細は技術概要に。',
-    ctaBody: '全83ページ：すべてのサブシステム、すべての境界、すべてのステータス — このページが意図的に省いた識別子と意思決定記録は、デューデリジェンス用の付録に。',
+    ctaTitle: '次のステージを共に形作る。',
+    ctaBody: 'デザインパートナーとして参加し、これらの境界を実際の組織ニーズに照らして検証してください。',
   },
 } as const satisfies Record<Locale, unknown>;

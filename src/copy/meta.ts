@@ -1,52 +1,5 @@
 import type { Locale } from '../i18n/ui';
 
-export const overviewPage = {
-  en: {
-    meta: { title: 'Technical Overview — Diskarte', description: 'The definitive Diskarte technical overview: architecture, product model, implementation status, and roadmap in 83 pages, written for engineers.' },
-    hero: { eyebrow: 'Technical Overview', h1: 'The complete mental model', lede: 'The complete architecture, product model, implementation status, and roadmap — written for CTOs, staff engineers, design partners, and technical diligence. Implemented and planned capabilities are never conflated.' },
-    facts: [['83', 'pages'], ['12', 'parts + appendix'], ['20', 'architecture diagrams'], ['5', 'status labels, used everywhere']],
-    tocHead: 'What it covers',
-    toc: [
-      'I · Vision — why AI needs an organizational runtime',
-      'II · Product — what a founder actually touches',
-      'III · Runtime — anatomy and boundaries',
-      'IV · The Constitutional Model — evidence, truth, canon',
-      'V · Greenfield — from setup code to governed organization',
-      'VI · Brownfield — reconstruction from digital exhaust',
-      'VII · Foundations — catalog, decomposition, recommendations',
-      'VIII · Substrate — profiles, appliance, provenance',
-      'IX · Operations Platform — operating without authority',
-      'X · Implementation status — the honest ledger',
-      'XI · Roadmap — gates, not dates',
-      'XII · Closing & founder + technical appendix',
-    ],
-    read: 'The document uses five status labels — Vision, Architecturally Complete, Implemented, Deployed (Internal Dev), Planned — and never blurs them. English only for now.',
-    explore: 'Explore the Architecture page',
-  },
-  ja: {
-    meta: { title: '技術概要 — Diskarte', description: 'Diskarteの決定版テクニカル・オーバービュー：アーキテクチャ、プロダクトモデル、実装ステータス、ロードマップを全83ページに。エンジニアのために。' },
-    hero: { eyebrow: '技術概要', h1: '完全なメンタルモデル', lede: 'アーキテクチャ、プロダクトモデル、実装ステータス、ロードマップの全体 — CTO、スタッフエンジニア、デザインパートナー、技術デューデリジェンスのために書かれています。実装済みと計画中を決して混同しません。' },
-    facts: [['83', 'ページ'], ['12', 'パート + 付録'], ['20', 'アーキテクチャ図'], ['5', 'つのステータス語彙を全編で']],
-    tocHead: '収録内容',
-    toc: [
-      'I · ビジョン — なぜAIには組織ランタイムが必要か',
-      'II · プロダクト — 創業者が実際に触れるもの',
-      'III · ランタイム — 解剖図と境界',
-      'IV · 憲法モデル — エビデンス、真実、カノン',
-      'V · グリーンフィールド — セットアップコードから統治された組織へ',
-      'VI · ブラウンフィールド — デジタルの痕跡からの再構築',
-      'VII · ファウンデーション — カタログ、分解、推奨',
-      'VIII · サブストレート — プロファイル、アプライアンス、来歴',
-      'IX · オペレーション基盤 — 権限なき運用',
-      'X · 実装ステータス — 正直な台帳',
-      'XI · ロードマップ — 日付ではなくゲート',
-      'XII · クロージングと創業者 + 技術付録',
-    ],
-    read: '本書は5つのステータス語彙 — 構想、アーキテクチャ確定、実装済み、稼働中（社内開発環境）、計画中 — を使い、決して曖昧にしません。現時点では英語のみです。',
-    explore: 'アーキテクチャページへ',
-  },
-} as const satisfies Record<Locale, unknown>;
-
 export const alphaPage = {
   en: {
     meta: { title: 'Design-Partner Alpha — Diskarte', description: 'Where Diskarte actually is, and who the design-partner alpha is for. Honest stage, honest gates.' },

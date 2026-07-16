@@ -3,8 +3,8 @@ export type Locale = 'en' | 'ja';
 export const ui = {
   en: {
     skip: 'Skip to content',
-    nav: { runtime: 'Runtime', architecture: 'Architecture', overview: 'Technical Overview', notes: 'Notes', about: 'About', alpha: 'Alpha' },
-    cta: { alpha: 'Apply as a Design Partner', overview: 'Read the Technical Overview' },
+    nav: { runtime: 'Runtime', architecture: 'Architecture', notes: 'Notes', about: 'About', alpha: 'Alpha' },
+    cta: { alpha: 'Apply as a Design Partner' },
     langSwitch: 'Language',
     langSwitchTo: '日本語で読む',
     menu: 'Menu',
@@ -32,8 +32,8 @@ export const ui = {
   },
   ja: {
     skip: '本文へ移動',
-    nav: { runtime: 'ランタイム', architecture: 'アーキテクチャ', overview: '技術概要', notes: 'ノート', about: '会社・創業者', alpha: 'アルファ' },
-    cta: { alpha: 'デザインパートナーに応募', overview: '技術概要を読む' },
+    nav: { runtime: 'ランタイム', architecture: 'アーキテクチャ', notes: 'ノート', about: '会社・創業者', alpha: 'アルファ' },
+    cta: { alpha: 'デザインパートナーに応募' },
     langSwitch: '言語',
     langSwitchTo: 'Read in English',
     menu: 'メニュー',
@@ -65,7 +65,6 @@ export const routes = {
   home: { en: '/', ja: '/ja' },
   runtime: { en: '/runtime', ja: '/ja/runtime' },
   architecture: { en: '/architecture', ja: '/ja/architecture' },
-  overview: { en: '/technical-overview', ja: '/ja/technical-overview' },
   alpha: { en: '/alpha', ja: '/ja/alpha' },
   about: { en: '/about', ja: '/ja/about' },
   notes: { en: '/notes', ja: '/ja/notes' },
