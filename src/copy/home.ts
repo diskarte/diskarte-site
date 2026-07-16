@@ -134,8 +134,6 @@ export const home = {
       h2: 'The complete mental model, in one document',
       title: 'The Diskarte Technical Overview',
       body: 'The complete architecture, product model, implementation status, and roadmap — 83 pages, written for engineers, with implemented and planned capabilities never conflated.',
-      view: 'View the Technical Overview',
-      download: 'Download PDF',
       explore: 'Explore the Architecture',
     },
     founder: {
@@ -285,8 +283,6 @@ export const home = {
       h2: '完全なメンタルモデルを、1つのドキュメントで',
       title: 'Diskarte 技術概要',
       body: 'アーキテクチャ、プロダクトモデル、実装ステータス、ロードマップの全体像 — 全83ページ。エンジニアのために書かれ、実装済みと計画中を決して混同しません。（本文は英語です）',
-      view: '技術概要を見る',
-      download: 'PDFをダウンロード',
       explore: 'アーキテクチャを見る',
     },
     founder: {

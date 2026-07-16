@@ -5,7 +5,6 @@ import { routes, type Locale } from '../../i18n/ui';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = overviewPage[locale];
-const pdf = '/technical-overview/diskarte-technical-overview.pdf';
 const previews = [
   ['/technical-overview/preview-1.webp', locale === 'ja' ? '表紙' : 'Cover'],
   ['/technical-overview/preview-6.webp', locale === 'ja' ? '「欠けているレイヤー」図' : 'The missing layer diagram'],
@@ -21,10 +20,6 @@ const previews = [
         <p class="eyebrow">{t.hero.eyebrow}</p>
         <h1 style="margin-top:14px;font-size:clamp(2rem,4.6vw,3.1rem)">{t.hero.h1}</h1>
         <p class="lede" style="margin-top:18px">{t.hero.lede}</p>
-        <div style="display:flex;gap:12px;margin-top:26px;flex-wrap:wrap">
-          <a class="btn primary" href={pdf} target="_blank" rel="noopener">{t.view} ↗</a>
-          <a class="btn" href={pdf} download>{t.download}</a>
-        </div>
         <div class="facts">
           {t.facts.map(([n, l]) => (
             <div class="fact"><span class="n">{n}</span><span class="l">{l}</span></div>

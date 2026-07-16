@@ -1,7 +1,7 @@
 ---
 import { routes, type Locale } from '../i18n/ui';
-interface Props { locale: Locale; title: string; body: string; view: string; download: string; explore: string }
-const { locale, title, body, view, download, explore } = Astro.props;
+interface Props { locale: Locale; title: string; body: string; explore: string }
+const { locale, title, body, explore } = Astro.props;
 const pages = [
   { src: '/technical-overview/preview-1.webp', alt: locale === 'ja' ? '技術概要 表紙' : 'Technical Overview cover page' },
   { src: '/technical-overview/preview-25.webp', alt: locale === 'ja' ? '証拠→真実→カノンの図解ページ' : 'Evidence, truth, and canon diagram page' },
@@ -18,8 +18,6 @@ const pages = [
     <h3>{title}</h3>
     <p>{body}</p>
     <div class="row">
-      <a class="btn primary" href="/technical-overview/diskarte-technical-overview.pdf" target="_blank" rel="noopener">{view} ↗</a>
-      <a class="btn" href="/technical-overview/diskarte-technical-overview.pdf" download>{download}</a>
       <a class="btn" href={routes.architecture[locale]}>{explore}</a>
     </div>
   </div>

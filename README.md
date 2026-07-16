@@ -19,7 +19,7 @@ bilingual (EN at `/`, JA at `/ja/…`), deployed to GitHub Pages.
     src/i18n/ui.ts        nav/footer/status strings, routes, Tally URL
     src/content/notes/    Notes entries (name.en.md / name.ja.md pairs)
     src/layouts/Base.astro head/SEO/hreflang/JSON-LD + a11y scaffolding
-    public/               static assets, Technical Overview PDF, OG cards
+    public/               static assets, overview previews, OG cards
     legacy/               the previous single-file site, preserved
 
 ## Editing copy

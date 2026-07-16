@@ -21,7 +21,7 @@ export const overviewPage = {
       'XII · Closing & founder + technical appendix',
     ],
     read: 'The document uses five status labels — Vision, Architecturally Complete, Implemented, Deployed (Internal Dev), Planned — and never blurs them. English only for now.',
-    view: 'View in browser', download: 'Download PDF (1.5 MB)', explore: 'Explore the Architecture page',
+    explore: 'Explore the Architecture page',
   },
   ja: {
     meta: { title: '技術概要 — Diskarte', description: 'Diskarteの決定版テクニカル・オーバービュー：アーキテクチャ、プロダクトモデル、実装ステータス、ロードマップを全83ページに。エンジニアのために。' },
@@ -43,7 +43,7 @@ export const overviewPage = {
       'XII · クロージングと創業者 + 技術付録',
     ],
     read: '本書は5つのステータス語彙 — 構想、アーキテクチャ確定、実装済み、稼働中（社内開発環境）、計画中 — を使い、決して曖昧にしません。現時点では英語のみです。',
-    view: 'ブラウザで見る', download: 'PDFをダウンロード (1.5 MB)', explore: 'アーキテクチャページへ',
+    explore: 'アーキテクチャページへ',
   },
 } as const satisfies Record<Locale, unknown>;
 
