@@ -56,4 +56,7 @@ jobs:
         run: |
           bash <(curl -sSfL https://raw.githubusercontent.com/rhysd/actionlint/v1.7.7/scripts/download-actionlint.bash) 1.7.7
           SHELLCHECK_OPTS='--severity=warning' ./actionlint -color
-      - uses: diskarte/actions/workflow-secret-policy@942becea881ae9b1d17a6068bdd87d48d0cef62e # custody tooling v1.2 (root-identifier policy)
+      - name: workflow secret policy (vendored — public repo cannot resolve private actions)
+        run: |
+          python3 -c 'import yaml' 2>/dev/null || python3 -m pip install --quiet --user pyyaml
+          python3 scripts/workflow-secret-policy.py
