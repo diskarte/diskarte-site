@@ -43,3 +43,17 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # ADR 0045 §5 guard: zero GitHub-secrets dependencies, enforced on the
+  # parsed workflow tree; plus actionlint. This repo is secretless BY DESIGN
+  # — the guard keeps it that way.
+  policy:
+    name: workflow-secret-policy + actionlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: actionlint
+        run: |
+          bash <(curl -sSfL https://raw.githubusercontent.com/rhysd/actionlint/v1.7.7/scripts/download-actionlint.bash) 1.7.7
+          SHELLCHECK_OPTS='--severity=warning' ./actionlint -color
+      - uses: diskarte/actions/workflow-secret-policy@942becea881ae9b1d17a6068bdd87d48d0cef62e # custody tooling v1.2 (root-identifier policy)
