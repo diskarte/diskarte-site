@@ -1,5 +1,5 @@
 ---
-import { ui, routes, altPath, TALLY_URL, type Locale } from '../i18n/ui';
+import { ui, routes, altPath, waitlistHref, type Locale } from '../i18n/ui';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = ui[locale];
@@ -29,7 +29,7 @@ const nav = [
       <a class="lang" href={switchHref} data-lang-switch={other} aria-label={t.langSwitchTo}>
         {other === 'ja' ? '日本語' : 'EN'}
       </a>
-      <a class="btn primary small-btn" href={TALLY_URL} target="_blank" rel="noopener">{t.cta.alpha}</a>
+      <a class="btn primary small-btn" href={waitlistHref(locale)}>{t.cta.alpha}</a>
       <button class="menu-btn" aria-expanded="false" aria-controls="mobile-nav" data-menu-btn>
         <span class="menu-label">{t.menu}</span>
         <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 4.5h14M2 9h14M2 13.5h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -39,7 +39,7 @@ const nav = [
   <nav id="mobile-nav" class="mobile-nav" hidden aria-label="Primary mobile">
     {nav.map((n) => <a href={n.href}>{n.label}</a>)}
     <a href={switchHref} data-lang-switch={other}>{other === 'ja' ? '日本語' : 'English'}</a>
-    <a class="btn primary" href={TALLY_URL} target="_blank" rel="noopener">{t.cta.alpha}</a>
+    <a class="btn primary" href={waitlistHref(locale)}>{t.cta.alpha}</a>
   </nav>
 </header>
 

@@ -1,0 +1,173 @@
+---
+/* Alpha waitlist — the real customer front door.
+   Flow: website signup → founder approval → setup code + download link by
+   email → desktop install/claim. This form does step one only; it never
+   hands out a download.
+
+   Designed for use inside a `.on-dark` section (CtaSection, AlphaPage).
+
+   Endpoint comes from PUBLIC_DISKARTE_WAITLIST_URL at BUILD time. When it is
+   unset (or not an absolute http(s) URL) the component renders an honest
+   "opens shortly" note instead of a form that would silently fail. */
+import { ui, type Locale } from '../i18n/ui';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const w = ui[locale].waitlist;
+
+const raw = (import.meta.env.PUBLIC_DISKARTE_WAITLIST_URL ?? '').trim();
+let endpoint = '';
+if (/^https?:\/\//i.test(raw)) {
+  const base = raw.replace(/\/+$/, '');
+  // Tolerate either the service base URL or the full contract path.
+  endpoint = base.endsWith('/v1/waitlist') ? base : `${base}/v1/waitlist`;
+}
+const available = endpoint !== '';
+---
+<div id="waitlist" class="waitlist">
+  {available ? (
+    <form
+      class="wl-form"
+      data-waitlist
+      data-endpoint={endpoint}
+      data-msg-invalid={w.invalid}
+      data-msg-error={w.error}
+      data-msg-success={w.success}
+      data-label-idle={w.submit}
+      data-label-busy={w.submitting}
+      novalidate
+    >
+      <div class="fields" data-waitlist-fields>
+        <div class="field">
+          <label for="waitlist-email">{w.label}</label>
+          <input
+            id="waitlist-email"
+            name="email"
+            type="email"
+            required
+            autocomplete="email"
+            inputmode="email"
+            spellcheck="false"
+            placeholder={w.placeholder}
+            aria-describedby="waitlist-status"
+          />
+        </div>
+        <button type="submit" class="btn on-dark primary">{w.submit}</button>
+      </div>
+      <p class="status" id="waitlist-status" role="status" aria-live="polite"></p>
+      <p class="note">{w.note}</p>
+      <noscript><p class="note">{w.noscript}</p></noscript>
+    </form>
+  ) : (
+    <div class="unavailable">
+      <p class="lead">{w.unavailableTitle}</p>
+      <p class="note">{w.unavailableBody}</p>
+    </div>
+  )}
+</div>
+
+<style>
+  .waitlist { margin-top: 28px; max-width: 560px; }
+  .fields { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+  /* An author `display` rule outranks the UA [hidden] rule — restate it, or
+     the fields stay visible after a successful submit. */
+  .fields[hidden] { display: none; }
+  .field { flex: 1 1 260px; display: flex; flex-direction: column; gap: 8px; }
+  label {
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--dark-muted);
+  }
+  input {
+    width: 100%; font-family: var(--sans); font-size: 0.95rem;
+    padding: 11px 14px; border-radius: var(--r-sm);
+    background: var(--dark-surface); color: #f2f4f7;
+    border: 1px solid var(--dark-line);
+  }
+  input::placeholder { color: var(--dark-muted); }
+  input:hover { border-color: var(--slate); }
+  input:focus-visible { outline: 2.5px solid var(--sky); outline-offset: 2px; }
+  input[aria-invalid='true'] { border-color: var(--amber); }
+  button.btn { font-family: var(--sans); cursor: pointer; }
+  button.btn[disabled] { opacity: 0.55; cursor: progress; }
+  .status { margin-top: 14px; font-size: 0.92rem; line-height: 1.55; }
+  .status:empty { display: none; }
+  .status[data-tone='success'] { color: var(--sky); }
+  .status[data-tone='error'] { color: var(--amber); }
+  .note { margin-top: 12px; font-size: 0.8rem; color: var(--dark-muted); max-width: 52ch; }
+  .unavailable { border-left: 2px solid var(--dark-line); padding-left: 16px; }
+  .unavailable .lead { color: var(--dark-text); font-weight: 600; }
+</style>
+
+<script>
+  const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  document.querySelectorAll<HTMLFormElement>('[data-waitlist]').forEach((form) => {
+    const endpoint = form.dataset.endpoint || '';
+    const input = form.querySelector<HTMLInputElement>('input[type="email"]');
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const fields = form.querySelector<HTMLElement>('[data-waitlist-fields]');
+    const status = form.querySelector<HTMLElement>('.status');
+    if (!input || !button || !fields || !status) return;
+
+    const say = (text: string, tone: 'error' | 'success' | '') => {
+      status.textContent = text;
+      if (tone) status.setAttribute('data-tone', tone);
+      else status.removeAttribute('data-tone');
+    };
+
+    let inFlight = false;
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (inFlight) return;
+
+      const email = input.value.trim();
+      if (!EMAIL.test(email)) {
+        input.setAttribute('aria-invalid', 'true');
+        say(form.dataset.msgInvalid || '', 'error');
+        input.focus();
+        return;
+      }
+      input.removeAttribute('aria-invalid');
+
+      inFlight = true;
+      button.disabled = true;
+      button.textContent = form.dataset.labelBusy || '';
+      form.setAttribute('aria-busy', 'true');
+      say('', '');
+
+      let accepted = false;
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        accepted = res.ok;
+      } catch {
+        accepted = false;
+      }
+
+      form.removeAttribute('aria-busy');
+      inFlight = false;
+
+      if (accepted) {
+        fields.hidden = true;
+        say(form.dataset.msgSuccess || '', 'success');
+        return;
+      }
+
+      button.disabled = false;
+      button.textContent = form.dataset.labelIdle || '';
+      // Never surface response internals — one plain retry message.
+      say(form.dataset.msgError || '', 'error');
+    });
+
+    input.addEventListener('input', () => {
+      if (input.getAttribute('aria-invalid') === 'true' && EMAIL.test(input.value.trim())) {
+        input.removeAttribute('aria-invalid');
+        say('', '');
+      }
+    });
+  });
+</script>

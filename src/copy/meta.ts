@@ -23,8 +23,8 @@ export const alphaPage = {
     ],
     expectHead: 'What working with us looks like',
     expect: 'Direct access to the founder and principal engineer. Deployment matched to your constraints. Your governance, memory, and judgment workflows taken seriously as design input — through the same governed pipeline the product itself uses. No fake availability: if a capability is planned, we will tell you it is planned.',
-    formHead: 'Apply',
-    formLede: 'The application is a short form. We read every submission and reply personally.',
+    formHead: 'Join the alpha list',
+    formLede: 'We read every signup personally. When your access is approved, a setup code and a download link arrive by email — the desktop app is claimed with that code.',
   },
   ja: {
     meta: { title: 'デザインパートナー・アルファ — Diskarte', description: 'Diskarteの現在地と、デザインパートナー・アルファの対象。正直なステージ、正直なゲート。' },
@@ -48,8 +48,8 @@ export const alphaPage = {
     ],
     expectHead: '協働のかたち',
     expect: '創業者兼プリンシパルエンジニアへの直接アクセス。制約に合わせたデプロイ。あなたの組織のガバナンス・記憶・判断のワークフローを、プロダクト自身が使うのと同じ統治されたパイプラインを通じて、設計インプットとして真剣に扱います。偽りの提供可否はありません。計画中の機能は「計画中」とお伝えします。',
-    formHead: '応募',
-    formLede: '応募は短いフォームです。すべての応募に目を通し、直接お返事します。',
+    formHead: 'アルファリストに登録',
+    formLede: 'すべての登録に直接目を通します。アクセスが承認され次第、セットアップコードとダウンロードリンクをメールでお送りします。デスクトップアプリは、そのコードでクレームします。',
   },
 } as const satisfies Record<Locale, unknown>;
 
@@ -125,9 +125,9 @@ export const privacyPage = {
     body: [
       'This website does not use third-party analytics, advertising trackers, or cookies for tracking.',
       'Your language preference is stored locally in your browser (localStorage) and never transmitted.',
-      'The design-partner application is operated by Tally (tally.so). Information you submit there is processed by Tally and shared with Diskarte solely to evaluate and respond to your application. See Tally’s privacy policy for their handling.',
+      'The alpha signup form sends the email address you type to a signup service operated by Diskarte itself — no third-party form provider is involved. That address is used solely to contact you about alpha access; it is not sold, shared, or added to a newsletter.',
       'The site is hosted as static files on GitHub Pages; standard server logs may be processed by the hosting provider.',
-      'Questions: contact us through the application form.',
+      'A direct contact address and the hosting region of the signup service will be named here before this page leaves draft.',
     ],
   },
   ja: {
@@ -137,9 +137,9 @@ export const privacyPage = {
     body: [
       '本サイトは、サードパーティのアナリティクス、広告トラッカー、トラッキング目的のCookieを使用していません。',
       '言語設定はブラウザのローカルストレージにのみ保存され、送信されることはありません。',
-      'デザインパートナー応募フォームはTally（tally.so）によって運営されています。送信された情報はTallyが処理し、応募の評価と返信のためにのみDiskarteに共有されます。Tallyの取り扱いについては同社のプライバシーポリシーをご覧ください。',
+      'アルファ登録フォームに入力されたメールアドレスは、Diskarte自身が運営する登録サービスに送信されます。第三者のフォームサービスは介在しません。このアドレスはアルファアクセスに関するご連絡にのみ使用し、販売・共有・ニュースレターへの追加は行いません。',
       '本サイトはGitHub Pages上の静的ファイルとしてホストされており、標準的なサーバーログはホスティング事業者によって処理される場合があります。',
-      'お問い合わせは応募フォームからお願いします。',
+      '直接のご連絡先と、登録サービスのホスティング地域は、本ページがドラフトを離れる前にここに明記します。',
     ],
   },
 } as const satisfies Record<Locale, unknown>;

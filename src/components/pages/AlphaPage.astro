@@ -2,7 +2,8 @@
 import Base from '../../layouts/Base.astro';
 import StatusChip from '../StatusChip.astro';
 import { alphaPage } from '../../copy/meta';
-import { ui, TALLY_URL, type Locale } from '../../i18n/ui';
+import Waitlist from '../Waitlist.astro';
+import { ui, type Locale } from '../../i18n/ui';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = alphaPage[locale];
@@ -54,9 +55,7 @@ const u = ui[locale];
     <div class="wrap" style="max-width:760px">
       <h2>{t.formHead}</h2>
       <p style="margin-top:14px">{t.formLede}</p>
-      <div style="display:flex;gap:14px;margin-top:26px;flex-wrap:wrap">
-        <a class="btn on-dark primary" href={TALLY_URL} target="_blank" rel="noopener">{u.cta.alpha} ↗</a>
-      </div>
+      <Waitlist locale={locale} />
     </div>
   </section>
 </Base>

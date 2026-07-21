@@ -27,7 +27,12 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # PUBLIC_* is inlined into the static output — public by definition, so
+      # it lives in a repository VARIABLE, never a secret (ADR 0045 §5). Unset
+      # ⇒ the waitlist form ships its honest "opens shortly" state.
       - run: npm run build
+        env:
+          PUBLIC_DISKARTE_WAITLIST_URL: ${{ vars.PUBLIC_DISKARTE_WAITLIST_URL }}
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

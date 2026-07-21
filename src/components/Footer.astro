@@ -1,5 +1,5 @@
 ---
-import { ui, routes, TALLY_URL, type Locale } from '../i18n/ui';
+import { ui, routes, waitlistHref, type Locale } from '../i18n/ui';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const t = ui[locale];
@@ -22,7 +22,7 @@ const year = new Date().getFullYear();
       <div class="col-head">{t.footer.company}</div>
       <a href={routes.about[locale]}>{t.nav.about}</a>
       <a href={routes.notes[locale]}>{t.nav.notes}</a>
-      <a href={TALLY_URL} target="_blank" rel="noopener">{t.footer.contact}</a>
+      <a href={waitlistHref(locale)}>{t.footer.contact}</a>
       <a href={routes.privacy[locale]}>{t.footer.privacy}</a>
     </nav>
   </div>
